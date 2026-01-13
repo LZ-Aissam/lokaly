@@ -86,10 +86,10 @@ export default function App() {
 
       {/* Bouton d'accès admin */}
       {!isAdminPage && (
-        <div className="fixed bottom-4 right-4 z-50">
+        <div className="fixed bottom-6 right-6 z-50">
           <button
             onClick={() => handleNavigate('admin-dashboard')}
-            className="bg-[var(--color-primary)] text-white px-3 py-1.5 rounded-md text-sm hover:bg-[var(--color-primary-hover)] transition-colors"
+            className="bg-[var(--color-danger)] text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:bg-[var(--color-danger-hover)] transition-colors"
           >
             Admin
           </button>
