@@ -9,7 +9,7 @@ export function Footer({ onNavigate }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white mt-auto">
+    <footer className="bg-slate-950 text-gray-300 mt-auto border-t-4 border-[var(--color-primary)]">
       {/* Section principale */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -41,7 +41,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Navigation</h4>
+            <h4 className="font-semibold text-lg mb-4 text-gray-300">Navigation</h4>
             <ul className="space-y-3">
               {[
                 { label: 'Accueil', page: 'home' },
@@ -63,7 +63,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Informations */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Informations</h4>
+            <h4 className="font-semibold text-lg mb-4 text-gray-300">Informations</h4>
             <ul className="space-y-3">
               {[
                 'À propos de nous',
@@ -82,7 +82,7 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Contact</h4>
+            <h4 className="font-semibold text-lg mb-4 text-gray-300">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-gray-400 text-sm">
                 <MapPin size={16} className="text-[var(--color-primary)] flex-shrink-0" />
@@ -108,10 +108,7 @@ export function Footer({ onNavigate }: FooterProps) {
       {/* Barre inférieure */}
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 text-sm">
-              © {currentYear} Lokaly. Tous droits réservés.
-            </p>
+          <div className="flex flex-col items-center gap-4">
             <div className="flex items-center gap-1 text-gray-500 text-sm">
               <span>Fait avec</span>
               <Heart size={14} className="text-red-500 fill-red-500" />
@@ -128,6 +125,9 @@ export function Footer({ onNavigate }: FooterProps) {
                 CGU
               </a>
             </div>
+            <p className="text-gray-500 text-sm">
+              © {currentYear} Lokaly. Tous droits réservés.
+            </p>
           </div>
         </div>
       </div>
