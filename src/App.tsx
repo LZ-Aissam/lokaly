@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { AdminSidebar } from './components/AdminSidebar';
+import { LoginPage } from './pages/LoginPage';
 import { HomePage } from './pages/HomePage';
 import { AnnoncesPage } from './pages/AnnoncesPage';
 import { AnnonceDetailPage } from './pages/AnnonceDetailPage';
@@ -33,17 +34,67 @@ type PageType =
   | 'admin-group-detail'
   | 'admin-stats';
 
+interface User {
+  username: string;
+  email?: string;
+}
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [pageData, setPageData] = useState<any>(null);
-  
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Vérifier si l'utilisateur est déjà connecté au chargement
+  useEffect(() => {
+    const savedUser = localStorage.getItem('lokaly_user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('lokaly_user');
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  const handleLogin = (loggedUser: User) => {
+    setUser(loggedUser);
+    setCurrentPage('home');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('lokaly_user');
+    setUser(null);
+    setCurrentPage('home');
+  };
+
   const handleNavigate = (page: string, data?: any) => {
     setCurrentPage(page as PageType);
     setPageData(data || null);
     window.scrollTo(0, 0);
   };
-  
+
   const isAdminPage = currentPage.startsWith('admin-');
+
+  // Écran de chargement
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl mb-4 animate-pulse">
+            <span className="text-3xl font-bold bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent">L</span>
+          </div>
+          <p className="text-white text-lg">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Page de connexion si non authentifié
+  if (!user) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
@@ -52,6 +103,8 @@ export default function App() {
           <Header
             currentPage={currentPage}
             onNavigate={handleNavigate}
+            user={user}
+            onLogout={handleLogout}
           />
           <main className="flex-1">
             {currentPage === 'home' && <HomePage onNavigate={handleNavigate} />}

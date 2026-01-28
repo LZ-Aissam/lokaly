@@ -1,13 +1,15 @@
 import React from 'react';
-import { Home, FileText, Users, User, Menu, X } from 'lucide-react';
+import { Home, FileText, Users, User, Menu, X, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   communityName?: string;
   onNavigate: (page: string) => void;
   currentPage: string;
+  user?: { username: string; email?: string };
+  onLogout?: () => void;
 }
 
-export function Header({ communityName = 'Commune de Tori', onNavigate, currentPage }: HeaderProps) {
+export function Header({ communityName = 'Commune de Tori', onNavigate, currentPage, user, onLogout }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navItems = [
@@ -59,6 +61,31 @@ export function Header({ communityName = 'Commune de Tori', onNavigate, currentP
             })}
           </nav>
 
+          {/* User info et déconnexion desktop */}
+          <div className="hidden md:flex items-center gap-3">
+            {user && (
+              <>
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-lg">
+                  <div className="w-7 h-7 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {user.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium text-[var(--color-text-primary)]">
+                    {user.username}
+                  </span>
+                </div>
+                <button
+                  onClick={onLogout}
+                  className="p-2 text-gray-500 hover:text-[var(--color-danger)] hover:bg-red-50 rounded-lg transition-colors"
+                  title="Se déconnecter"
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
+            )}
+          </div>
+
           {/* Bouton menu mobile */}
           <button
             className="md:hidden p-2 rounded-lg hover:bg-gray-100"
@@ -71,6 +98,21 @@ export function Header({ communityName = 'Commune de Tori', onNavigate, currentP
         {/* Menu mobile */}
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-[var(--color-border)]">
+            {/* User info mobile */}
+            {user && (
+              <div className="flex items-center gap-3 px-4 py-3 mb-2 bg-gray-50 rounded-lg mx-2">
+                <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full flex items-center justify-center">
+                  <span className="text-white font-medium">
+                    {user.username.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-medium">{user.username}</p>
+                  <p className="text-xs text-[var(--color-text-secondary)]">Connecté</p>
+                </div>
+              </div>
+            )}
+
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentPage === item.id;
@@ -92,6 +134,20 @@ export function Header({ communityName = 'Commune de Tori', onNavigate, currentP
                 </button>
               );
             })}
+
+            {/* Bouton déconnexion mobile */}
+            {user && onLogout && (
+              <button
+                onClick={() => {
+                  onLogout();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 mt-2 text-[var(--color-danger)] hover:bg-red-50 transition-all border-t border-[var(--color-border)]"
+              >
+                <LogOut size={20} />
+                <span>Se déconnecter</span>
+              </button>
+            )}
           </nav>
         )}
       </div>
