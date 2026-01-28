@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
-import { Search, Users, Eye, Settings, TrendingUp } from 'lucide-react';
+import { Search, Users, Eye, TrendingUp } from 'lucide-react';
 import { mockGroupes } from '../data/mockData';
 
 interface AdminGroupsPageProps {
@@ -63,7 +63,7 @@ export function AdminGroupsPage({ onNavigate }: AdminGroupsPageProps) {
               <Badge variant="level" level={Math.max(...mockGroupes.map(g => g.niveau))} />
             </div>
             <div>
-              <p className="text-2xl font-bold">Nv.{Math.max(...mockGroupes.map(g => g.niveau))}</p>
+              <p className="text-2xl font-bold">Niveau {Math.max(...mockGroupes.map(g => g.niveau))}</p>
               <p className="text-sm text-[var(--color-text-secondary)]">Niveau max atteint</p>
             </div>
           </div>
@@ -112,23 +112,15 @@ export function AdminGroupsPage({ onNavigate }: AdminGroupsPageProps) {
                 </div>
               </div>
 
-              <div className="flex gap-2 pt-2">
+              <div className="pt-2">
                 <Button
-                  variant="outline"
+                  variant="primary"
                   size="sm"
                   icon={<Eye size={16} />}
                   onClick={() => handleViewGroup(groupe)}
-                  className="flex-1"
+                  fullWidth
                 >
                   Voir détails
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  icon={<Settings size={16} />}
-                  className="flex-1"
-                >
-                  Gérer
                 </Button>
               </div>
             </div>

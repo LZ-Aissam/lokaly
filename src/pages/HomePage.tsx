@@ -19,7 +19,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
               Bienvenue dans votre communauté
             </h1>
-            <p className="text-lg text-white/90 mb-8">
+            <p className="text-lg text-white opacity-90 mb-8">
               Lokaly facilite l'entraide et les échanges entre voisins.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -43,15 +43,15 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="flex gap-8 mt-10 pt-6 border-t border-white/20">
               <div>
                 <p className="text-2xl font-bold text-white">{mockStats.habitants}</p>
-                <p className="text-white/70 text-sm">Habitants</p>
+                <p className="text-white text-sm opacity-70">Habitants</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{mockStats.annonces}</p>
-                <p className="text-white/70 text-sm">Annonces</p>
+                <p className="text-white text-sm opacity-70">Annonces</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{mockStats.groupes}</p>
-                <p className="text-white/70 text-sm">Groupes</p>
+                <p className="text-white text-sm opacity-70">Groupes</p>
               </div>
             </div>
           </div>

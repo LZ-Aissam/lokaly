@@ -60,7 +60,7 @@ export function AdminDashboardPage() {
                 <Line
                   type="monotone"
                   dataKey="annonces"
-                  stroke="#3b82f6"
+                  stroke="#1e40af"
                   strokeWidth={2}
                   name="Annonces"
                 />
@@ -82,7 +82,7 @@ export function AdminDashboardPage() {
                 <Legend />
                 <Bar
                   dataKey="participation"
-                  fill="#10b981"
+                  fill="#3b82f6"
                   name="Participation (%)"
                 />
               </BarChart>

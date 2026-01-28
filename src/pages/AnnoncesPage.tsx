@@ -45,7 +45,7 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
         </div>
 
         {/* Barre de recherche et filtres */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-8 space-y-4">
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8 space-y-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)]">

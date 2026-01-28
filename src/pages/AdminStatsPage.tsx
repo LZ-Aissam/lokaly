@@ -13,7 +13,7 @@ export function AdminStatsPage() {
     { name: 'Atelier', value: 4 }
   ];
   
-  const COLORS = ['#3b82f6', '#10b981', '#fbbf24', '#ef4444'];
+  const COLORS = ['#1e40af', '#3b82f6', '#fbbf24', '#ef4444'];
   
   return (
     <div className="space-y-8">
@@ -69,14 +69,14 @@ export function AdminStatsPage() {
                 <Line 
                   type="monotone" 
                   dataKey="annonces" 
-                  stroke="#3b82f6" 
+                  stroke="#1e40af" 
                   strokeWidth={2}
                   name="Annonces"
                 />
                 <Line 
                   type="monotone" 
                   dataKey="participation" 
-                  stroke="#10b981" 
+                  stroke="#3b82f6" 
                   strokeWidth={2}
                   name="Participation"
                 />
@@ -130,8 +130,8 @@ export function AdminStatsPage() {
                 <YAxis stroke="#6b7280" />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="annonces" fill="#3b82f6" name="Annonces" />
-                <Bar dataKey="membres" fill="#10b981" name="Membres" />
+                <Bar dataKey="annonces" fill="#1e40af" name="Annonces" />
+                <Bar dataKey="membres" fill="#3b82f6" name="Membres" />
               </BarChart>
             </ResponsiveContainer>
           </div>

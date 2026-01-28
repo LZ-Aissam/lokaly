@@ -36,7 +36,7 @@ export function AnnonceCard({ annonce, onClick, onInterested }: AnnonceCardProps
     <Card hover onClick={onClick}>
       <div className="overflow-hidden">
         {/* Image */}
-        <div className="relative h-40 overflow-hidden">
+        <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
           <ImageWithFallback
             src={annonce.image}
             alt={annonce.titre}

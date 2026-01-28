@@ -12,7 +12,6 @@ import { CreerGroupePage } from './pages/CreerGroupePage';
 import { ProfilPage } from './pages/ProfilPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AdminUsersPage } from './pages/AdminUsersPage';
-import { AdminCommunitiesPage } from './pages/AdminCommunitiesPage';
 import { AdminCustomizationPage } from './pages/AdminCustomizationPage';
 import { AdminStatsPage } from './pages/AdminStatsPage';
 import { AdminGroupsPage } from './pages/AdminGroupsPage';
@@ -29,7 +28,6 @@ type PageType =
   | 'profil'
   | 'admin-dashboard'
   | 'admin-users'
-  | 'admin-communities'
   | 'admin-customization'
   | 'admin-groups'
   | 'admin-group-detail'
@@ -74,7 +72,6 @@ export default function App() {
             <div className="p-4 sm:p-6 lg:p-8">
               {currentPage === 'admin-dashboard' && <AdminDashboardPage />}
               {currentPage === 'admin-users' && <AdminUsersPage />}
-              {currentPage === 'admin-communities' && <AdminCommunitiesPage onNavigate={handleNavigate} />}
               {currentPage === 'admin-customization' && <AdminCustomizationPage communaute={pageData} />}
               {currentPage === 'admin-groups' && <AdminGroupsPage onNavigate={handleNavigate} />}
               {currentPage === 'admin-group-detail' && <AdminGroupDetailPage groupe={pageData} onNavigate={handleNavigate} />}

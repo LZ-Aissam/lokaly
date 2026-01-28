@@ -35,7 +35,7 @@ export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProp
         <Card>
           <div className="overflow-hidden">
             {/* Image (obligatoire selon CDC) */}
-            <div className="h-64 md:h-96 overflow-hidden">
+            <div className="aspect-[16/9] overflow-hidden bg-gray-100">
               <ImageWithFallback
                 src={annonce.image}
                 alt={annonce.titre}
