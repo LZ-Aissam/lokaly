@@ -94,7 +94,7 @@ export function AdminGroupsPage({ onNavigate }: AdminGroupsPageProps) {
           <Card key={groupe.id} hover>
             <div className="p-6 space-y-4">
               <div className="flex items-start justify-between gap-3">
-                <h4 className="flex-1">{groupe.nom}</h4>
+                <h4 className="flex-1 min-w-0 truncate">{groupe.nom}</h4>
                 <Badge variant="level" level={groupe.niveau} />
               </div>
 

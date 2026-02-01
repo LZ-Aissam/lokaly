@@ -21,9 +21,9 @@ export function Badge({ children, variant = 'neutral', level, emoji = '⭐' }: B
   };
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm border ${variantClasses[variant]}`}>
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm border whitespace-nowrap flex-shrink-0 ${variantClasses[variant]}`}>
       {variant === 'level' && level ? (
-        <span>{renderLevelEmojis(level)}</span>
+        <span className="text-xs">{renderLevelEmojis(level)}</span>
       ) : (
         children
       )}

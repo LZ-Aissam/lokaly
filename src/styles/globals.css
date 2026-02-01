@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme {
+:root {
   /* Colors - Palette Lokaly */
   --color-primary: #1e40af; /* Bleu nuit */
   --color-primary-hover: #1e3a8a;

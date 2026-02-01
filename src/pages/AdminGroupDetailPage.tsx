@@ -56,8 +56,8 @@ export function AdminGroupDetailPage({ groupe, onNavigate }: AdminGroupDetailPag
 
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="flex items-center gap-3">
-              <h1>{groupe.nom}</h1>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h1 className="min-w-0">{groupe.nom}</h1>
               <Badge variant="level" level={groupe.niveau} />
             </div>
             <p className="text-[var(--color-text-secondary)] mt-2">

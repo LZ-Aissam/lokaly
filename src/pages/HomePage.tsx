@@ -15,14 +15,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
               Bienvenue dans votre communauté
             </h1>
             <p className="text-lg text-white opacity-90 mb-8">
               Lokaly facilite l'entraide et les échanges entre voisins.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 justify-center">
               <Button
                 variant="white"
                 icon={<Plus size={18} />}
@@ -40,7 +40,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
 
             {/* Stats */}
-            <div className="flex gap-8 mt-10 pt-6 border-t border-white/20">
+            <div className="flex gap-8 mt-8 pt-6 border-t border-white/20 justify-center">
               <div>
                 <p className="text-2xl font-bold text-white">{mockStats.habitants}</p>
                 <p className="text-white text-sm opacity-70">Habitants</p>

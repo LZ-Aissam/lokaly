@@ -15,8 +15,8 @@ export function Footer({ onNavigate }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* À propos */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
+          <div className="space-y-4 text-center md:text-left">
+            <div className="flex items-center gap-3 justify-center md:justify-start">
               <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-xl flex items-center justify-center">
                 <span className="text-white font-bold text-lg">L</span>
               </div>
@@ -26,7 +26,7 @@ export function Footer({ onNavigate }: FooterProps) {
               La plateforme qui connecte les habitants de votre quartier.
               Partagez, échangez et créez des liens avec vos voisins.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 justify-center md:justify-start">
               <a href="#" className="w-9 h-9 bg-gray-800 hover:bg-[var(--color-primary)] rounded-lg flex items-center justify-center transition-colors">
                 <Facebook size={18} />
               </a>
@@ -40,7 +40,7 @@ export function Footer({ onNavigate }: FooterProps) {
           </div>
 
           {/* Navigation */}
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold text-lg mb-4 text-gray-300">Navigation</h4>
             <ul className="space-y-3">
               {[
@@ -62,7 +62,7 @@ export function Footer({ onNavigate }: FooterProps) {
           </div>
 
           {/* Informations */}
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold text-lg mb-4 text-gray-300">Informations</h4>
             <ul className="space-y-3">
               {[
@@ -81,20 +81,20 @@ export function Footer({ onNavigate }: FooterProps) {
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="text-center md:text-left">
             <h4 className="font-semibold text-lg mb-4 text-gray-300">Contact</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-gray-400 text-sm">
+              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
                 <MapPin size={16} className="text-[var(--color-primary)] flex-shrink-0" />
                 <span>Paris, France</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-400 text-sm">
+              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
                 <Mail size={16} className="text-[var(--color-primary)] flex-shrink-0" />
                 <a href="mailto:contact@lokaly.fr" className="hover:text-white transition-colors">
                   contact@lokaly.fr
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-gray-400 text-sm">
+              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
                 <Phone size={16} className="text-[var(--color-primary)] flex-shrink-0" />
                 <a href="tel:+33123456789" className="hover:text-white transition-colors">
                   01 23 45 67 89

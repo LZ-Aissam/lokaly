@@ -8,7 +8,7 @@ export const mockAnnonces = [
     zone: 'Centre-ville',
     disponibilite: 'Week-ends',
     type: 'Prêt',
-    image: 'https://images.unsplash.com/photo-1537877853655-34bdcda5e833?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYXJkZW4lMjB0b29sc3xlbnwxfHx8fDE3NjUyODg5NDB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://images.unsplash.com/photo-1537877853655-34bdcda5e833?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&w=1080&h=720&q=80',
     auteur: {
       nom: 'Marie Dubois',
       avatar: ''
@@ -21,7 +21,7 @@ export const mockAnnonces = [
     zone: 'Quartier Nord',
     disponibilite: 'Mercredis 14h-16h',
     type: 'Atelier',
-    image: 'https://images.unsplash.com/photo-1750498407644-ed88cc6bbac4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b3Jrc2hvcCUyMGNyYWZ0fGVufDF8fHx8MTc2NTM1NzIyNHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&w=1080&h=720&q=80',
     auteur: {
       nom: 'Sophie Martin',
       avatar: ''
@@ -34,7 +34,7 @@ export const mockAnnonces = [
     zone: 'Quartier Sud',
     disponibilite: 'À convenir',
     type: 'Don',
-    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZHJlbiUyMGJvb2tzfGVufDF8fHx8MTc2NTI4ODk0MHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&w=1080&h=720&q=80',
     auteur: {
       nom: 'Pierre Leroy',
       avatar: ''
@@ -47,7 +47,7 @@ export const mockAnnonces = [
     zone: 'Toute la commune',
     disponibilite: 'Samedis matin',
     type: 'Service',
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYXJkZW5pbmclMjBoZWxwfGVufDF8fHx8MTc2NTI4ODk0MHww&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&w=1080&h=720&q=80',
     auteur: {
       nom: 'Lucas Bernard',
       avatar: ''
