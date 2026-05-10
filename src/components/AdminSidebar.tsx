@@ -1,26 +1,37 @@
+// AdminSidebar.tsx
+// Barre latérale de navigation pour les pages admin
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, UserPlus, BarChart3, Palette, Menu, X, UsersRound, ClipboardCheck } from 'lucide-react';
 
-interface AdminSidebarProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
-export function AdminSidebar({ currentPage, onNavigate }: AdminSidebarProps) {
+// plus de props onNavigate et currentPage - React Router gère tout
+export function AdminSidebar() {
+  const navigate = useNavigate();
+  const location = useLocation(); // pour savoir quelle page admin est active
   const [isOpen, setIsOpen] = React.useState(false);
 
+  // liste des items du menu admin avec leurs chemins
   const menuItems = [
-    { id: 'admin-dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'admin-users', label: 'Utilisateurs', icon: UserPlus },
-    { id: 'admin-groups', label: 'Groupes', icon: UsersRound },
-    { id: 'admin-stats', label: 'Statistiques', icon: BarChart3 },
-    { id: 'admin-validation', label: 'Validation', icon: ClipboardCheck },
-    { id: 'admin-customization', label: 'Personnalisation', icon: Palette },
+    { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/admin/users', label: 'Utilisateurs', icon: UserPlus },
+    { path: '/admin/groupes', label: 'Groupes', icon: UsersRound },
+    { path: '/admin/stats', label: 'Statistiques', icon: BarChart3 },
+    { path: '/admin/validation', label: 'Validation', icon: ClipboardCheck },
+    { path: '/admin/config', label: 'Personnalisation', icon: Palette },
   ];
+
+  // vérifie si l'item de menu correspond à la page actuelle
+  const isActive = (path: string) => {
+    if (path === '/admin') {
+      // pour le dashboard on vérifie l'égalité exacte
+      return location.pathname === '/admin';
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <>
-      {/* Bouton menu mobile */}
+      {/* Bouton hamburger visible uniquement sur mobile */}
       <button
         className="lg:hidden fixed top-20 left-4 z-50 p-3 bg-white rounded-lg shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
@@ -28,7 +39,7 @@ export function AdminSidebar({ currentPage, onNavigate }: AdminSidebarProps) {
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Overlay mobile */}
+      {/* Fond semi-transparent quand la sidebar est ouverte sur mobile */}
       {isOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/50 z-40"
@@ -36,13 +47,13 @@ export function AdminSidebar({ currentPage, onNavigate }: AdminSidebarProps) {
         />
       )}
 
-      {/* Sidebar */}
+      {/* La sidebar elle-même */}
       <aside
         className={`fixed lg:sticky top-0 left-0 h-screen bg-white border-r border-[var(--color-border)] w-64 z-40 transition-transform duration-300 flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        {/* Header */}
+        {/* En-tête de la sidebar */}
         <div className="p-6 border-b border-[var(--color-border)]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-lg flex items-center justify-center">
@@ -55,21 +66,20 @@ export function AdminSidebar({ currentPage, onNavigate }: AdminSidebarProps) {
           </div>
         </div>
 
-        {/* Navigation */}
+        {/* Menu de navigation admin */}
         <nav className="flex-1 p-4 overflow-y-auto">
           <ul className="space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
-              const isActive = currentPage === item.id;
               return (
-                <li key={item.id}>
+                <li key={item.path}>
                   <button
                     onClick={() => {
-                      onNavigate(item.id);
-                      setIsOpen(false);
+                      navigate(item.path);
+                      setIsOpen(false); // fermer la sidebar sur mobile après navigation
                     }}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                      isActive
+                      isActive(item.path)
                         ? 'bg-[var(--color-primary)] text-white'
                         : 'text-[var(--color-text-primary)] hover:bg-gray-100'
                     }`}
@@ -83,10 +93,10 @@ export function AdminSidebar({ currentPage, onNavigate }: AdminSidebarProps) {
           </ul>
         </nav>
 
-        {/* Footer */}
+        {/* Lien retour au site principal */}
         <div className="p-4 border-t border-[var(--color-border)]">
           <button
-            onClick={() => onNavigate('home')}
+            onClick={() => navigate('/')}
             className="w-full px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
           >
             ← Retour au site
