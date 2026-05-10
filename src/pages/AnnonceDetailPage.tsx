@@ -1,40 +1,63 @@
+// AnnonceDetailPage.tsx
+// Détail d'une annonce - on récupère l'annonce via l'id dans l'URL
 import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { Card } from '../components/Card';
 import { MapPin, Calendar, Heart, ArrowLeft, MessageCircle } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
+import { mockAnnonces } from '../data/mockData';
 
-interface AnnonceDetailPageProps {
-  annonce: any;
-  onNavigate: (page: string) => void;
-}
-
-export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProps) {
+// plus de props - on utilise useParams pour récupérer l'id depuis l'URL
+export function AnnonceDetailPage() {
+  const { id } = useParams<{ id: string }>(); // récupère l'id depuis /annonces/:id
+  const navigate = useNavigate();
   const [interested, setInterested] = React.useState(false);
-  
+
+  // on cherche l'annonce correspondant à l'id dans les données mock
+  const annonce = mockAnnonces.find(a => a.id === id);
+
+  // si l'annonce n'existe pas, on affiche un message d'erreur
+  if (!annonce) {
+    return (
+      <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Annonce introuvable</h2>
+          <p className="text-[var(--color-text-secondary)] mb-6">
+            Cette annonce n'existe pas ou a été supprimée.
+          </p>
+          <Button variant="primary" onClick={() => navigate('/annonces')}>
+            Retour aux annonces
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const handleInterest = () => {
     setInterested(true);
     alert('Merci pour votre intérêt ! Vous pouvez maintenant contacter l\'auteur via le lien ci-dessous.');
   };
-  
+
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Bouton retour */}
+
+        {/* bouton retour vers la liste */}
         <Button
           variant="outline"
           icon={<ArrowLeft size={20} />}
-          onClick={() => onNavigate('annonces')}
+          onClick={() => navigate('/annonces')}
           className="mb-6"
         >
           Retour aux annonces
         </Button>
-        
-        {/* Carte principale */}
+
+        {/* Carte principale de l'annonce */}
         <Card>
           <div className="overflow-hidden">
-            {/* Image (obligatoire selon CDC) */}
+            {/* image de l'annonce */}
             <div className="aspect-[16/9] overflow-hidden bg-gray-100">
               <ImageWithFallback
                 src={annonce.image}
@@ -42,18 +65,17 @@ export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProp
                 className="w-full h-full object-cover"
               />
             </div>
-            
-            {/* Contenu */}
+
             <div className="p-6 md:p-8 space-y-6">
-              {/* En-tête */}
+              {/* titre et badge type */}
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-4">
                   <h1 className="flex-1">{annonce.name}</h1>
                   <Badge variant="accent">{annonce.type}</Badge>
                 </div>
               </div>
-              
-              {/* Informations */}
+
+              {/* localisation et disponibilité */}
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-2 text-[var(--color-text-secondary)]">
                   <MapPin size={20} />
@@ -64,16 +86,16 @@ export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProp
                   <span>{annonce.disponibilite}</span>
                 </div>
               </div>
-              
-              {/* Description */}
+
+              {/* description complète */}
               <div className="space-y-2">
                 <h3>Description</h3>
                 <p className="text-[var(--color-text-secondary)] leading-relaxed">
                   {annonce.description}
                 </p>
               </div>
-              
-              {/* Auteur */}
+
+              {/* informations sur l'auteur */}
               <div className="pt-6 border-t border-[var(--color-border)]">
                 <h4 className="mb-3">Proposé par</h4>
                 <div className="flex items-center gap-3">
@@ -88,8 +110,8 @@ export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProp
                   </div>
                 </div>
               </div>
-              
-              {/* Bouton d'intérêt */}
+
+              {/* bouton pour manifester son intérêt */}
               <div className="pt-6 border-t border-[var(--color-border)]">
                 <Button
                   variant="primary"
@@ -105,17 +127,17 @@ export function AnnonceDetailPage({ annonce, onNavigate }: AnnonceDetailPageProp
             </div>
           </div>
         </Card>
-        
-        {/* Encadré contact */}
+
+        {/* encadré de contact affiché seulement si l'user a manifesté son intérêt */}
         {interested && (
           <Card className="mt-6">
             <div className="p-6 bg-blue-50 rounded-xl">
               <div className="flex items-start gap-3">
                 <MessageCircle size={24} className="text-[var(--color-primary)] flex-shrink-0 mt-1" />
                 <div className="space-y-2">
-                  <h4>Contactez l{'\''}auteur</h4>
+                  <h4>Contactez l'auteur</h4>
                   <p className="text-[var(--color-text-secondary)]">
-                    La messagerie se fait en dehors de la plateforme. Contactez {annonce.auteur.nom} via Line ou WhatsApp pour organiser votre échange.
+                    La messagerie se fait en dehors de la plateforme. Contactez {annonce.auteur.nom} via Line ou WhatsApp.
                   </p>
                   <Button
                     variant="primary"
