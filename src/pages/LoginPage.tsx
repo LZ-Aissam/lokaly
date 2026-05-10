@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Users, Heart, MessageCircle } from 'lucide-react';
 
 interface LoginPageProps {
@@ -6,6 +7,7 @@ interface LoginPageProps {
 }
 
 export function LoginPage({ onLogin }: LoginPageProps) {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -30,8 +32,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
     await new Promise(resolve => setTimeout(resolve, 800));
 
     if (loginUsername === 'test' && loginPassword === 'test') {
-      localStorage.setItem('lokaly_user', JSON.stringify({ username: loginUsername }));
-      onLogin({ username: loginUsername });
+      const loggedUser = { username: loginUsername };
+      localStorage.setItem('lokaly_user', JSON.stringify(loggedUser));
+      console.log('login OK, redirection vers accueil');
+      onLogin(loggedUser);
+      navigate('/'); // on redirige vers l'accueil après connexion réussie
     } else {
       setError('Identifiants incorrects');
       setIsLoading(false);
@@ -62,7 +67,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
 
     const user = { username: registerUsername, email: registerEmail };
     localStorage.setItem('lokaly_user', JSON.stringify(user));
+    console.log('inscription OK, redirection vers accueil');
     onLogin(user);
+    navigate('/'); // redirection après inscription
   };
 
   return (
