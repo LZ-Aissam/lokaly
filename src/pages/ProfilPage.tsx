@@ -1,3 +1,6 @@
+// ProfilPage.tsx
+// Page de profil de l'utilisateur connecté
+// Note : cette page ne navigue nulle part, elle n'a pas besoin de useNavigate
 import React, { useState } from 'react';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
@@ -8,17 +11,18 @@ import { User, Save, Edit2, Plus, X } from 'lucide-react';
 import { mockUserProfile } from '../data/mockData';
 import { toast } from 'sonner';
 
-interface ProfilPageProps {
-  onNavigate: (page: string) => void;
-}
-
-export function ProfilPage({ onNavigate }: ProfilPageProps) {
+// plus de props - cette page ne navigue pas donc pas besoin de useNavigate non plus
+export function ProfilPage() {
+  // état pour savoir si on est en mode édition
   const [isEditing, setIsEditing] = useState(false);
+
+  // états du formulaire de profil
   const [bio, setBio] = useState(mockUserProfile.bio);
   const [contactExterne, setContactExterne] = useState(mockUserProfile.contactExterne);
   const [objetsDisponibles, setObjetsDisponibles] = useState(mockUserProfile.objetsDisponibles);
   const [nouvelObjet, setNouvelObjet] = useState('');
 
+  // ajouter un objet à la liste si non vide et non dupliqué
   const handleAddObjet = () => {
     const trimmed = nouvelObjet.trim();
     if (trimmed && !objetsDisponibles.includes(trimmed)) {
@@ -27,18 +31,21 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
     }
   };
 
+  // supprimer un objet de la liste
   const handleRemoveObjet = (objet: string) => {
     setObjetsDisponibles(objetsDisponibles.filter(o => o !== objet));
   };
-  
+
   const handleSave = () => {
+    // TODO: envoyer les modifs au backend quand il sera prêt
     toast.success('Profil enregistré avec succès !');
     setIsEditing(false);
   };
-  
+
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* En-tête avec bouton modifier / enregistrer */}
         <div className="flex items-center justify-between mb-8">
           <h1>Mon profil</h1>
           <Button
@@ -55,11 +62,11 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             {isEditing ? 'Enregistrer' : 'Modifier'}
           </Button>
         </div>
-        
-        {/* Carte principale */}
+
+        {/* Carte principale - avatar, nom, bio */}
         <Card className="mb-6">
           <div className="p-6 md:p-8 space-y-6">
-            {/* Avatar et nom */}
+            {/* Avatar et nom de l'utilisateur */}
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full flex items-center justify-center">
                 <User size={40} className="text-white" />
@@ -69,8 +76,8 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
                 <p className="text-[var(--color-text-secondary)]">@{mockUserProfile.identifier}</p>
               </div>
             </div>
-            
-            {/* Bio */}
+
+            {/* Bio modifiable */}
             <div>
               <Textarea
                 label="Présentation"
@@ -83,7 +90,7 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             </div>
           </div>
         </Card>
-        
+
         {/* Centres d'intérêt */}
         <Card className="mb-6">
           <div className="p-6 md:p-8 space-y-4">
@@ -102,8 +109,8 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             </div>
           </div>
         </Card>
-        
-        {/* Compétences */}
+
+        {/* Compétences proposées à la communauté */}
         <Card className="mb-6">
           <div className="p-6 md:p-8 space-y-4">
             <h3>Compétences proposées</h3>
@@ -121,8 +128,8 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             </div>
           </div>
         </Card>
-        
-        {/* Objets disponibles */}
+
+        {/* Objets disponibles - liste avec ajout/suppression en mode édition */}
         <Card className="mb-6">
           <div className="p-6 md:p-8 space-y-4">
             <h3>Objets disponibles</h3>
@@ -133,6 +140,7 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
                     <span className="w-2 h-2 bg-[var(--color-primary)] rounded-full flex-shrink-0"></span>
                     {objet}
                   </div>
+                  {/* bouton supprimer visible seulement en mode édition */}
                   {isEditing && (
                     <button
                       onClick={() => handleRemoveObjet(objet)}
@@ -144,6 +152,7 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
                 </li>
               ))}
             </ul>
+            {/* champ d'ajout d'objet visible seulement en mode édition */}
             {isEditing && (
               <div className="flex gap-2 pt-2">
                 <input
@@ -161,8 +170,8 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             )}
           </div>
         </Card>
-        
-        {/* Contact externe */}
+
+        {/* Contact externe (lien Line / WhatsApp) */}
         <Card>
           <div className="p-6 md:p-8 space-y-4">
             <h3>Contact externe</h3>
@@ -176,7 +185,8 @@ export function ProfilPage({ onNavigate }: ProfilPageProps) {
             />
           </div>
         </Card>
-        
+
+        {/* Boutons de sauvegarde/annulation en bas de page - visibles seulement en mode édition */}
         {isEditing && (
           <div className="flex gap-4 mt-6">
             <Button
