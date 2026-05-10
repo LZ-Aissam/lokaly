@@ -1,3 +1,6 @@
+// AdminGroupsPage.tsx
+// Page admin - liste et gestion de tous les groupes communautaires
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';

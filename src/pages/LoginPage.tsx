@@ -1,3 +1,6 @@
+// LoginPage.tsx
+// Page de connexion et inscription - accessible sans être authentifié
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Users, Heart, MessageCircle } from 'lucide-react';
