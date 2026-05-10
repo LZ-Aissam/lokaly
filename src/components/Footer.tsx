@@ -1,16 +1,15 @@
+// Footer.tsx
+// Pied de page affiché sur toutes les pages utilisateur
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MapPin, Mail, Phone, Facebook, Instagram, Twitter, Heart } from 'lucide-react';
 
-interface FooterProps {
-  onNavigate?: (page: string) => void;
-}
-
-export function Footer({ onNavigate }: FooterProps) {
+// plus besoin de onNavigate, on utilise Link directement
+export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-slate-950 text-gray-300 mt-auto border-t-4 border-[var(--color-primary)]">
-      {/* Section principale */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
 
@@ -41,94 +40,56 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Navigation */}
           <div className="text-center md:text-left">
-            <h4 className="font-semibold text-lg mb-4 text-gray-300">Navigation</h4>
-            <ul className="space-y-3">
-              {[
-                { label: 'Accueil', page: 'home' },
-                { label: 'Annonces', page: 'annonces' },
-                { label: 'Groupes', page: 'groupes' },
-                { label: 'Mon Profil', page: 'profil' },
-              ].map((item) => (
-                <li key={item.page}>
-                  <button
-                    onClick={() => onNavigate?.(item.page)}
-                    className="text-gray-400 hover:text-white hover:translate-x-1 transition-all text-sm inline-block"
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Informations */}
-          <div className="text-center md:text-left">
-            <h4 className="font-semibold text-lg mb-4 text-gray-300">Informations</h4>
-            <ul className="space-y-3">
-              {[
-                'À propos de nous',
-                'Comment ça marche',
-                'FAQ',
-                'Blog',
-              ].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-gray-400 hover:text-white hover:translate-x-1 transition-all text-sm inline-block">
-                    {item}
-                  </a>
-                </li>
-              ))}
+            <h4 className="text-white font-semibold mb-4">Navigation</h4>
+            <ul className="space-y-2 text-sm">
+              {/* on utilise Link au lieu de button+onNavigate */}
+              <li><Link to="/" className="hover:text-[var(--color-primary)] transition-colors">Accueil</Link></li>
+              <li><Link to="/annonces" className="hover:text-[var(--color-primary)] transition-colors">Annonces</Link></li>
+              <li><Link to="/groupes" className="hover:text-[var(--color-primary)] transition-colors">Groupes</Link></li>
+              <li><Link to="/profil" className="hover:text-[var(--color-primary)] transition-colors">Mon profil</Link></li>
             </ul>
           </div>
 
           {/* Contact */}
           <div className="text-center md:text-left">
-            <h4 className="font-semibold text-lg mb-4 text-gray-300">Contact</h4>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
+            <h4 className="text-white font-semibold mb-4">Contact</h4>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-2 justify-center md:justify-start">
                 <MapPin size={16} className="text-[var(--color-primary)] flex-shrink-0" />
-                <span>Paris, France</span>
+                <span>1 Place de la Mairie, 75001</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
+              <li className="flex items-center gap-2 justify-center md:justify-start">
                 <Mail size={16} className="text-[var(--color-primary)] flex-shrink-0" />
-                <a href="mailto:contact@lokaly.fr" className="hover:text-white transition-colors">
-                  contact@lokaly.fr
-                </a>
+                <span>contact@lokaly.fr</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-400 text-sm justify-center md:justify-start">
+              <li className="flex items-center gap-2 justify-center md:justify-start">
                 <Phone size={16} className="text-[var(--color-primary)] flex-shrink-0" />
-                <a href="tel:+33123456789" className="hover:text-white transition-colors">
-                  01 23 45 67 89
-                </a>
+                <span>01 23 45 67 89</span>
               </li>
+            </ul>
+          </div>
+
+          {/* Actions rapides */}
+          <div className="text-center md:text-left">
+            <h4 className="text-white font-semibold mb-4">Actions rapides</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to="/annonces/nouvelle" className="hover:text-[var(--color-primary)] transition-colors">Publier une annonce</Link></li>
+              <li><Link to="/groupes/creer" className="hover:text-[var(--color-primary)] transition-colors">Créer un groupe</Link></li>
+              <li><Link to="/annonces" className="hover:text-[var(--color-primary)] transition-colors">Voir les annonces</Link></li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Barre inférieure */}
-      <div className="border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-1 text-gray-500 text-sm">
-              <span>Fait avec</span>
-              <Heart size={14} className="text-red-500 fill-red-500" />
-              <span>pour les communautés locales</span>
-            </div>
-            <div className="flex gap-6">
-              <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">
-                Mentions légales
-              </a>
-              <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">
-                Confidentialité
-              </a>
-              <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors">
-                CGU
-              </a>
-            </div>
-            <p className="text-gray-500 text-sm">
-              © {currentYear} Lokaly. Tous droits réservés.
-            </p>
-          </div>
+      {/* Barre du bas */}
+      <div className="border-t border-gray-800 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-gray-500">
+            © {currentYear} Lokaly. Tous droits réservés.
+          </p>
+          <p className="text-sm text-gray-500 flex items-center gap-1">
+            Fait avec <Heart size={14} className="text-red-500" /> pour notre communauté
+          </p>
         </div>
       </div>
     </footer>
