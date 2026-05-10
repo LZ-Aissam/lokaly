@@ -7,10 +7,6 @@ import { Badge } from '../components/Badge';
 import { Save, Eye, Upload, Plus, X, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface AdminCustomizationPageProps {
-  communaute?: any;
-}
-
 // Jeux de couleurs prédéfinis
 const COLOR_PRESETS = [
   { name: 'Bleu océan', primary: '#3b82f6', secondary: '#10b981' },
@@ -21,7 +17,8 @@ const COLOR_PRESETS = [
   { name: 'Bleu nuit', primary: '#1e40af', secondary: '#3b82f6' },
 ];
 
-export function AdminCustomizationPage({ communaute }: AdminCustomizationPageProps) {
+// la page gère ses propres valeurs par défaut - pas besoin de props
+export function AdminCustomizationPage() {
   // États pour les couleurs (Bleu nuit par défaut)
   const [couleurPrimaire, setCouleurPrimaire] = useState('#1e40af');
   const [couleurSecondaire, setCouleurSecondaire] = useState('#3b82f6');
@@ -78,7 +75,7 @@ export function AdminCustomizationPage({ communaute }: AdminCustomizationPagePro
       <div>
         <h1>Personnalisation</h1>
         <p className="text-[var(--color-text-secondary)] mt-2">
-          {communaute ? `${communaute.nom}` : 'Personnalisez l\'apparence de votre communauté'}
+          {'Personnalisez l\'apparence de votre communauté'}
         </p>
       </div>
 
