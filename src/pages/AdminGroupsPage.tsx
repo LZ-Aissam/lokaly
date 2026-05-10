@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { Search, Users, Eye, TrendingUp, Star } from 'lucide-react';
 import { mockGroupes } from '../data/mockData';
 
-interface AdminGroupsPageProps {
-  onNavigate: (page: string, data?: any) => void;
-}
-
-export function AdminGroupsPage({ onNavigate }: AdminGroupsPageProps) {
+// plus besoin de props - on utilise useNavigate de react-router
+export function AdminGroupsPage() {
+  // hook de navigation react-router
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
+  // filtre les groupes selon la recherche
   const filteredGroupes = mockGroupes.filter(groupe =>
     groupe.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     groupe.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleViewGroup = (groupe: typeof mockGroupes[0]) => {
-    onNavigate('admin-group-detail', groupe);
+  // navigue vers la page de détail admin du groupe
+  const handleViewGroup = (groupeId: string) => {
+    navigate('/admin/groupes/' + groupeId);
   };
 
   return (
@@ -117,7 +119,7 @@ export function AdminGroupsPage({ onNavigate }: AdminGroupsPageProps) {
                   variant="primary"
                   size="sm"
                   icon={<Eye size={16} />}
-                  onClick={() => handleViewGroup(groupe)}
+                  onClick={() => handleViewGroup(groupe.id)}
                   fullWidth
                 >
                   Voir détails
