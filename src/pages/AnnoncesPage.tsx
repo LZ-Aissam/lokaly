@@ -1,4 +1,7 @@
+// AnnoncesPage.tsx
+// Liste de toutes les annonces avec recherche et filtres
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Select } from '../components/Select';
 import { AnnonceCard } from '../components/AnnonceCard';
@@ -7,16 +10,18 @@ import { Search, SlidersHorizontal, Plus } from 'lucide-react';
 import { mockAnnonces } from '../data/mockData';
 import { toast } from 'sonner';
 
-interface AnnoncesPageProps {
-  onNavigate: (page: string, data?: any) => void;
-}
+// plus de props - useNavigate gère la navigation
+export function AnnoncesPage() {
+  // hook de navigation
+  const navigate = useNavigate();
 
-export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
+  // états pour la recherche et les filtres
   const [searchTerm, setSearchTerm] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [zoneFilter, setZoneFilter] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
+  // on filtre les annonces selon les critères sélectionnés
   const filteredAnnonces = mockAnnonces.filter((annonce) => {
     const matchSearch = annonce.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                        annonce.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -25,10 +30,12 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
     return matchSearch && matchType && matchZone;
   });
 
+  console.log('Annonces filtrées:', filteredAnnonces.length); // debug - à garder pour l'instant
+
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* En-tête avec titre et bouton nouvelle annonce */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
             <h1>Annonces locales</h1>
@@ -36,10 +43,11 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
               {filteredAnnonces.length} annonce{filteredAnnonces.length > 1 ? 's' : ''} disponible{filteredAnnonces.length > 1 ? 's' : ''}
             </p>
           </div>
+          {/* bouton pour aller créer une nouvelle annonce */}
           <Button
             variant="primary"
             icon={<Plus size={20} />}
-            onClick={() => onNavigate('nouvelle-annonce')}
+            onClick={() => navigate('/annonces/nouvelle')}
           >
             Nouvelle annonce
           </Button>
@@ -60,6 +68,7 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
                 className="w-full pl-12 pr-4 py-3 rounded-lg border-2 border-[var(--color-border)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all"
               />
             </div>
+            {/* bouton pour afficher/masquer les filtres avancés */}
             <Button
               variant="outline"
               icon={<SlidersHorizontal size={20} />}
@@ -69,7 +78,7 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
             </Button>
           </div>
 
-          {/* Filtres avancés */}
+          {/* Filtres avancés - masqués par défaut */}
           {showFilters && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-[var(--color-border)]">
               <Select
@@ -102,20 +111,22 @@ export function AnnoncesPage({ onNavigate }: AnnoncesPageProps) {
           )}
         </div>
 
-        {/* Liste des annonces */}
+        {/* Liste des annonces filtrées */}
         {filteredAnnonces.length === 0 ? (
+          // message si aucune annonce trouvée
           <div className="text-center py-16">
             <p className="text-[var(--color-text-secondary)] text-lg">
               Aucune annonce ne correspond à vos critères de recherche.
             </p>
           </div>
         ) : (
+          // grille des cartes d'annonces
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredAnnonces.map((annonce) => (
               <AnnonceCard
                 key={annonce.id}
                 annonce={annonce}
-                onClick={() => onNavigate('annonce-detail', annonce)}
+                onClick={() => navigate('/annonces/' + annonce.id)}
                 onInterested={() => toast.success('Intérêt manifesté ! Le contact sera partagé.')}
               />
             ))}
