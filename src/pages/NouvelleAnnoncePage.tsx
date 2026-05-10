@@ -1,4 +1,7 @@
+// NouvelleAnnoncePage.tsx
+// Formulaire pour créer une nouvelle annonce
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Textarea } from '../components/Textarea';
@@ -7,22 +10,28 @@ import { Card } from '../components/Card';
 import { ArrowLeft, Sparkles, Eye, Send, Upload, X } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface NouvelleAnnoncePageProps {
-  onNavigate: (page: string) => void;
-}
+// plus de props - useNavigate gère tout
+export function NouvelleAnnoncePage() {
+  // hook de navigation
+  const navigate = useNavigate();
 
-export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
+  // états du formulaire
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
   const [zone, setZone] = useState('');
   const [disponibilite, setDisponibilite] = useState('');
+
+  // états pour l'assistance IA
   const [aiKeywords, setAiKeywords] = useState('');
   const [aiSuggestion, setAiSuggestion] = useState('');
+
+  // états pour l'image et la prévisualisation
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
+  // génération de suggestion par l'IA (simulation)
   const handleAiGenerate = () => {
     // Simulation de génération IA
     if (aiKeywords) {
@@ -31,7 +40,8 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
       );
     }
   };
-  
+
+  // lecture de l'image sélectionnée et conversion en base64 pour la preview
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -43,36 +53,40 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: envoyer les données au backend quand il sera prêt
     toast.success('Annonce publiée avec succès !');
-    onNavigate('annonces');
+    // redirection vers la liste des annonces après publication
+    navigate('/annonces');
   };
-  
+
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* Bouton retour vers l'accueil */}
         <Button
           variant="outline"
           icon={<ArrowLeft size={20} />}
-          onClick={() => onNavigate('home')}
+          onClick={() => navigate('/')}
           className="mb-6"
         >
           Retour
         </Button>
-        
+
         <div className="mb-8">
           <h1>Créer une annonce</h1>
           <p className="text-[var(--color-text-secondary)] mt-2">
             Partagez avec votre communauté ce que vous souhaitez donner, prêter ou proposer.
           </p>
         </div>
-        
-        {/* Formulaire */}
+
+        {/* Formulaire principal */}
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Section informations de base */}
           <Card>
             <div className="p-6 md:p-8 space-y-6">
               <h3>Informations de base</h3>
-              
+
+              {/* Titre de l'annonce */}
               <Input
                 label="Titre de l'annonce"
                 placeholder="Ex: Prêt de tondeuse à gazon"
@@ -82,6 +96,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                 helper="Soyez clair et précis"
               />
 
+              {/* Type d'annonce */}
               <Select
                 label="Type d'annonce"
                 placeholder="Sélectionnez un type"
@@ -95,7 +110,8 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                   { value: 'Atelier', label: 'Atelier' }
                 ]}
               />
-              
+
+              {/* Description détaillée */}
               <Textarea
                 label="Description"
                 placeholder="Décrivez votre annonce en détail..."
@@ -105,7 +121,8 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                 rows={6}
                 helper="Minimum 20 caractères"
               />
-              
+
+              {/* Zone et disponibilité côte à côte */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Select
                   label="Zone"
@@ -120,7 +137,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                     { value: 'Toute la commune', label: 'Toute la commune' }
                   ]}
                 />
-                
+
                 <Input
                   label="Disponibilité"
                   placeholder="Ex: Week-ends, 14h-16h"
@@ -129,11 +146,13 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                   required
                 />
               </div>
-              
+
+              {/* Upload d'image optionnel */}
               <div className="space-y-2">
                 <label className="block text-sm">
                   Image (optionnel)
                 </label>
+                {/* input file caché - on le déclenche via le div cliquable */}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -142,6 +161,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                   onChange={handleImageChange}
                 />
                 {imagePreview ? (
+                  // affichage de l'aperçu avec bouton pour supprimer
                   <div className="relative rounded-lg overflow-hidden border-2 border-[var(--color-border)]">
                     <img src={imagePreview} alt="Aperçu" className="w-full h-48 object-cover" />
                     <button
@@ -153,6 +173,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                     </button>
                   </div>
                 ) : (
+                  // zone de drop / clic pour sélectionner une image
                   <div
                     onClick={() => fileInputRef.current?.click()}
                     className="border-2 border-dashed border-[var(--color-border)] rounded-lg p-8 text-center hover:border-[var(--color-primary)] transition-colors cursor-pointer"
@@ -165,8 +186,8 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
               </div>
             </div>
           </Card>
-          
-          {/* Assistance IA */}
+
+          {/* Section assistance IA */}
           <Card>
             <div className="p-6 md:p-8 space-y-4">
               <div className="flex items-center gap-2">
@@ -176,13 +197,14 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
               <p className="text-[var(--color-text-secondary)]">
                 Besoin d{'\''}aide pour rédiger votre annonce ? Entrez quelques mots-clés et l{'\''}IA vous proposera un texte.
               </p>
-              
+
+              {/* champ mots-clés pour la génération IA */}
               <Input
                 placeholder="Ex: pommes / donner / samedi"
                 value={aiKeywords}
                 onChange={(e) => setAiKeywords(e.target.value)}
               />
-              
+
               <Button
                 type="button"
                 variant="outline"
@@ -191,11 +213,13 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
               >
                 Générer une suggestion
               </Button>
-              
+
+              {/* affichage de la suggestion générée */}
               {aiSuggestion && (
                 <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 space-y-2">
                   <p className="text-sm font-medium text-blue-900">Suggestion IA :</p>
                   <p className="text-[var(--color-text-secondary)]">{aiSuggestion}</p>
+                  {/* bouton pour copier la suggestion dans la description */}
                   <Button
                     type="button"
                     size="sm"
@@ -208,8 +232,8 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
               )}
             </div>
           </Card>
-          
-          {/* Actions */}
+
+          {/* Boutons d'action finaux */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               type="button"
@@ -231,7 +255,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
           </div>
         </form>
 
-        {/* Modal prévisualisation */}
+        {/* Modal de prévisualisation de l'annonce */}
         {showPreview && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg">
@@ -242,6 +266,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                 </button>
               </div>
               <div className="p-6 space-y-4">
+                {/* image si elle existe */}
                 {imagePreview && (
                   <img src={imagePreview} alt="Aperçu" className="w-full h-48 object-cover rounded-xl" />
                 )}
@@ -264,6 +289,7 @@ export function NouvelleAnnoncePage({ onNavigate }: NouvelleAnnoncePageProps) {
                     <span className="font-medium">Disponibilité :</span> {disponibilite}
                   </p>
                 )}
+                {/* auteur fictif pour la preview */}
                 <div className="pt-4 border-t border-[var(--color-border)] flex items-center gap-3">
                   <div className="w-8 h-8 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full flex items-center justify-center">
                     <span className="text-white text-xs font-bold">M</span>
