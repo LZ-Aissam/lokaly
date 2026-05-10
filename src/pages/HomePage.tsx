@@ -1,4 +1,7 @@
+// HomePage.tsx
+// Page d'accueil - affiche les annonces et groupes récents
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { AnnonceCard } from '../components/AnnonceCard';
 import { GroupeCard } from '../components/GroupeCard';
@@ -6,14 +9,15 @@ import { Plus, ArrowRight } from 'lucide-react';
 import { mockAnnonces, mockGroupes, mockStats } from '../data/mockData';
 import { toast } from 'sonner';
 
-interface HomePageProps {
-  onNavigate: (page: string, data?: any) => void;
-}
+// plus de props - on utilise useNavigate directement
+export function HomePage() {
+  // hook pour naviguer entre les pages
+  const navigate = useNavigate();
 
-export function HomePage({ onNavigate }: HomePageProps) {
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
-      {/* Hero Section */}
+
+      {/* Section hero avec les stats et les boutons d'action */}
       <section className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto text-center">
@@ -24,23 +28,24 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Lokaly facilite l'entraide et les échanges entre voisins.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
+              {/* bouton pour créer une nouvelle annonce */}
               <Button
                 variant="white"
                 icon={<Plus size={18} />}
-                onClick={() => onNavigate('nouvelle-annonce')}
+                onClick={() => navigate('/annonces/nouvelle')}
               >
                 Nouvelle annonce
               </Button>
               <Button
                 variant="outline"
-                onClick={() => onNavigate('annonces')}
+                onClick={() => navigate('/annonces')}
                 className="border-white text-white hover:bg-white hover:text-[var(--color-primary)]"
               >
                 Voir les annonces
               </Button>
             </div>
 
-            {/* Stats */}
+            {/* statistiques de la communauté */}
             <div className="flex gap-8 mt-8 pt-6 border-t border-white/20 justify-center">
               <div>
                 <p className="text-2xl font-bold text-white">{mockStats.habitants}</p>
@@ -59,7 +64,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Annonces récentes */}
+      {/* Section annonces récentes - on affiche les 4 premières */}
       <section className="py-16 bg-[var(--color-background)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8">
@@ -72,7 +77,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Button
               variant="outline"
               icon={<ArrowRight size={18} />}
-              onClick={() => onNavigate('annonces')}
+              onClick={() => navigate('/annonces')}
               className="hidden sm:flex"
             >
               Voir toutes
@@ -84,7 +89,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <AnnonceCard
                 key={annonce.id}
                 annonce={annonce}
-                onClick={() => onNavigate('annonce-detail', annonce)}
+                onClick={() => navigate('/annonces/' + annonce.id)}
                 onInterested={() => toast.success('Intérêt manifesté ! Le contact sera partagé.')}
               />
             ))}
@@ -94,7 +99,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Button
               variant="outline"
               icon={<ArrowRight size={18} />}
-              onClick={() => onNavigate('annonces')}
+              onClick={() => navigate('/annonces')}
             >
               Voir toutes les annonces
             </Button>
@@ -102,7 +107,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Groupes actifs */}
+      {/* Section groupes actifs - on affiche les 3 premiers */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-8">
@@ -115,7 +120,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Button
               variant="outline"
               icon={<ArrowRight size={18} />}
-              onClick={() => onNavigate('groupes')}
+              onClick={() => navigate('/groupes')}
               className="hidden sm:flex"
             >
               Voir tous
@@ -127,7 +132,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <GroupeCard
                 key={groupe.id}
                 groupe={groupe}
-                onClick={() => onNavigate('groupe-detail', groupe)}
+                onClick={() => navigate('/groupes/' + groupe.id)}
               />
             ))}
           </div>
@@ -136,13 +141,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <Button
               variant="outline"
               icon={<ArrowRight size={18} />}
-              onClick={() => onNavigate('groupes')}
+              onClick={() => navigate('/groupes')}
             >
               Voir tous les groupes
             </Button>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

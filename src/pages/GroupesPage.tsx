@@ -1,18 +1,21 @@
+// GroupesPage.tsx
+// Liste de tous les groupes communautaires
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { GroupeCard } from '../components/GroupeCard';
 import { Plus } from 'lucide-react';
 import { mockGroupes } from '../data/mockData';
 
-interface GroupesPageProps {
-  onNavigate: (page: string, data?: any) => void;
-}
+// plus de props
+export function GroupesPage() {
+  // hook de navigation
+  const navigate = useNavigate();
 
-export function GroupesPage({ onNavigate }: GroupesPageProps) {
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* en-tête avec bouton créer un groupe */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
             <h1>Groupes communautaires</h1>
@@ -23,19 +26,19 @@ export function GroupesPage({ onNavigate }: GroupesPageProps) {
           <Button
             variant="primary"
             icon={<Plus size={20} />}
-            onClick={() => onNavigate('creer-groupe')}
+            onClick={() => navigate('/groupes/creer')}
           >
             Créer un groupe
           </Button>
         </div>
 
-        {/* Grille de groupes */}
+        {/* grille de toutes les cartes groupe */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {mockGroupes.map((groupe) => (
             <GroupeCard
               key={groupe.id}
               groupe={groupe}
-              onClick={() => onNavigate('groupe-detail', groupe)}
+              onClick={() => navigate('/groupes/' + groupe.id)}
             />
           ))}
         </div>
