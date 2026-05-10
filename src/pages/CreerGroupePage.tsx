@@ -1,4 +1,7 @@
+// CreerGroupePage.tsx
+// Formulaire pour créer un nouveau groupe communautaire
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { Textarea } from '../components/Textarea';
@@ -7,45 +10,49 @@ import { Card } from '../components/Card';
 import { ArrowLeft, Users, Send } from 'lucide-react';
 import { toast } from 'sonner';
 
-interface CreerGroupePageProps {
-  onNavigate: (page: string) => void;
-}
+// plus de props - useNavigate s'en charge
+export function CreerGroupePage() {
+  // hook de navigation
+  const navigate = useNavigate();
 
-export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
+  // états du formulaire
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [categorie, setCategorie] = useState('');
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: envoyer les données au backend quand il sera prêt
     toast.success('Groupe créé avec succès ! Il commencera au Niveau 1.');
-    onNavigate('groupes');
+    // redirection vers la liste des groupes après création
+    navigate('/groupes');
   };
-  
+
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* Bouton retour vers la liste des groupes */}
         <Button
           variant="outline"
           icon={<ArrowLeft size={20} />}
-          onClick={() => onNavigate('groupes')}
+          onClick={() => navigate('/groupes')}
           className="mb-6"
         >
           Retour
         </Button>
-        
+
         <div className="mb-8">
           <h1>Créer un groupe</h1>
           <p className="text-[var(--color-text-secondary)] mt-2">
             Rassemblez les habitants autour d{'\''}un centre d{'\''}intérêt commun
           </p>
         </div>
-        
-        {/* Formulaire */}
+
+        {/* Formulaire de création de groupe */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <Card>
             <div className="p-6 md:p-8 space-y-6">
+              {/* En-tête de la section avec l'icône */}
               <div className="flex items-center gap-3 pb-4 border-b border-[var(--color-border)]">
                 <div className="w-12 h-12 bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] rounded-full flex items-center justify-center">
                   <Users size={24} className="text-white" />
@@ -57,7 +64,8 @@ export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
                   </p>
                 </div>
               </div>
-              
+
+              {/* Champ nom du groupe */}
               <Input
                 label="Nom du groupe"
                 placeholder="Ex: Jardiniers du quartier"
@@ -67,6 +75,7 @@ export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
                 helper="Choisissez un nom clair et évocateur"
               />
 
+              {/* Sélection de la catégorie */}
               <Select
                 label="Catégorie"
                 placeholder="Sélectionnez une catégorie"
@@ -80,7 +89,8 @@ export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
                   { value: 'Bricolage', label: 'Bricolage' }
                 ]}
               />
-              
+
+              {/* Description du groupe */}
               <Textarea
                 label="Description"
                 placeholder="Décrivez l'objectif et les activités du groupe..."
@@ -92,8 +102,8 @@ export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
               />
             </div>
           </Card>
-          
-          {/* Information sur la gamification */}
+
+          {/* Information sur la gamification - les niveaux */}
           <Card>
             <div className="p-6 md:p-8 space-y-4">
               <h3>Système de niveaux</h3>
@@ -128,14 +138,14 @@ export function CreerGroupePage({ onNavigate }: CreerGroupePageProps) {
               </div>
             </div>
           </Card>
-          
-          {/* Actions */}
+
+          {/* Boutons d'action : annuler ou soumettre */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               type="button"
               variant="outline"
               fullWidth
-              onClick={() => onNavigate('groupes')}
+              onClick={() => navigate('/groupes')}
             >
               Annuler
             </Button>
